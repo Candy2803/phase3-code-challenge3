@@ -205,3 +205,20 @@ def all_introductions(band_id):
     
     conn.close()
     return introductions
+
+def band_with_most_performances():
+    conn = sqlite3.connect('concerts.db')
+    cursor = conn.cursor()
+    
+    cursor.execute('''
+    SELECT bands.name, COUNT(concerts.id) AS num_concerts 
+    FROM concerts 
+    JOIN bands ON concerts.band_id = bands.id 
+    GROUP BY bands.id 
+    ORDER BY num_concerts DESC 
+    LIMIT 1;
+    ''')
+    
+    band = cursor.fetchone()
+    conn.close()
+    return band
