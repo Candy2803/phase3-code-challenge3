@@ -59,6 +59,7 @@ def insert_sample_data():
 
 insert_sample_data()
 
+# method to get band for concert
 def get_band_for_concert(concert_id):
     conn = sqlite3.connect('concerts.db')
     cursor = conn.cursor()
@@ -74,6 +75,7 @@ def get_band_for_concert(concert_id):
     conn.close()
     return band
 
+# method to get venue for concert
 def get_venue_for_concert(concert_id):
     conn = sqlite3.connect('concerts.db')
     cursor = conn.cursor()
@@ -89,6 +91,7 @@ def get_venue_for_concert(concert_id):
     conn.close()
     return venue
 
+# method to get concerts for venue
 def get_concerts_for_venue(venue_id):
     conn = sqlite3.connect('concerts.db')
     cursor = conn.cursor()
@@ -101,6 +104,7 @@ def get_concerts_for_venue(venue_id):
     conn.close()
     return concerts
 
+# method to get bands for venue
 def get_bands_for_venue(venue_id):
     conn = sqlite3.connect('concerts.db')
     cursor = conn.cursor()
@@ -116,6 +120,7 @@ def get_bands_for_venue(venue_id):
     conn.close()
     return bands
 
+# method to get concert for band
 def get_concerts_for_band(band_id):
     conn = sqlite3.connect('concerts.db')
     cursor = conn.cursor()
@@ -128,6 +133,7 @@ def get_concerts_for_band(band_id):
     conn.close()
     return concerts
 
+# method to get venue for band
 def get_venues_for_band(band_id):
     conn = sqlite3.connect('concerts.db')
     cursor = conn.cursor()
@@ -143,6 +149,7 @@ def get_venues_for_band(band_id):
     conn.close()
     return venues
 
+# method to validate hometown show
 def is_hometown_show(concert_id):
     conn = sqlite3.connect('concerts.db')
     cursor = conn.cursor()
@@ -159,6 +166,7 @@ def is_hometown_show(concert_id):
     conn.close()
     return hometown == city
 
+# method for concert introduction
 def concert_introduction(concert_id):
     conn = sqlite3.connect('concerts.db')
     cursor = conn.cursor()
@@ -175,6 +183,7 @@ def concert_introduction(concert_id):
     conn.close()
     print(f"We the {band_name} from {band_hometown} will be visiting {band.venue} soon")
 
+# method for play in venue
 def play_in_venue(band_id, venue_id, date):
     conn = sqlite3.connect('concerts.db')
     cursor = conn.cursor()
@@ -186,6 +195,7 @@ def play_in_venue(band_id, venue_id, date):
     conn.commit()
     conn.close()
 
+# method for all introductions
 def all_introductions(band_id):
     conn = sqlite3.connect('concerts.db')
     cursor = conn.cursor()
@@ -206,6 +216,7 @@ def all_introductions(band_id):
     conn.close()
     return introductions
 
+# method for band with most performances
 def band_with_most_performances():
     conn = sqlite3.connect('concerts.db')
     cursor = conn.cursor()
@@ -223,6 +234,7 @@ def band_with_most_performances():
     conn.close()
     return band
 
+# method for concert on date
 def concert_on_date(venue_id, date):
     conn = sqlite3.connect('concerts.db')
     cursor = conn.cursor()
@@ -237,6 +249,7 @@ def concert_on_date(venue_id, date):
     conn.close()
     return concert
 
+# method for most frequent band
 def most_frequent_band(venue_id):
     conn = sqlite3.connect('concerts.db')
     cursor = conn.cursor()
