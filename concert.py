@@ -142,3 +142,19 @@ def get_venues_for_band(band_id):
     venues = cursor.fetchall()
     conn.close()
     return venues
+
+def is_hometown_show(concert_id):
+    conn = sqlite3.connect('concerts.db')
+    cursor = conn.cursor()
+    
+    cursor.execute('''
+    SELECT bands.hometown, venues.city 
+    FROM concerts 
+    JOIN bands ON concerts.band_id = bands.id 
+    JOIN venues ON concerts.venue_id = venues.id 
+    WHERE concerts.id = ?;
+    ''', (concert_id,))
+    
+    hometown, city = cursor.fetchone()
+    conn.close()
+    return hometown == city
