@@ -58,3 +58,18 @@ def insert_sample_data():
     conn.close()
 
 insert_sample_data()
+
+def get_band_for_concert(concert_id):
+    conn = sqlite3.connect('concerts.db')
+    cursor = conn.cursor()
+    
+    cursor.execute('''
+    SELECT bands.name, bands.hometown 
+    FROM concerts 
+    JOIN bands ON concerts.band_id = bands.id 
+    WHERE concerts.id = ?;
+    ''', (concert_id,))
+    
+    band = cursor.fetchone()
+    conn.close()
+    return band
