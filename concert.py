@@ -222,3 +222,35 @@ def band_with_most_performances():
     band = cursor.fetchone()
     conn.close()
     return band
+
+def concert_on_date(venue_id, date):
+    conn = sqlite3.connect('concerts.db')
+    cursor = conn.cursor()
+    
+    cursor.execute('''
+    SELECT * FROM concerts 
+    WHERE venue_id = ? AND date = ? 
+    LIMIT 1;
+    ''', (venue_id, date))
+    
+    concert = cursor.fetchone()
+    conn.close()
+    return concert
+
+def most_frequent_band(venue_id):
+    conn = sqlite3.connect('concerts.db')
+    cursor = conn.cursor()
+    
+    cursor.execute('''
+    SELECT bands.name, COUNT(concerts.id) AS num_concerts 
+    FROM concerts 
+    JOIN bands ON concerts.band_id = bands.id 
+    WHERE concerts.venue_id = ? 
+    GROUP BY bands.id 
+    ORDER BY num_concerts DESC 
+    LIMIT 1;
+    ''', (venue_id,))
+    
+    band = cursor.fetchone()
+    conn.close()
+    return band
