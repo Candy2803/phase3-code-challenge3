@@ -127,3 +127,18 @@ def get_concerts_for_band(band_id):
     concerts = cursor.fetchall()
     conn.close()
     return concerts
+
+def get_venues_for_band(band_id):
+    conn = sqlite3.connect('concerts.db')
+    cursor = conn.cursor()
+    
+    cursor.execute('''
+    SELECT DISTINCT venues.title 
+    FROM concerts 
+    JOIN venues ON concerts.venue_id = venues.id 
+    WHERE concerts.band_id = ?;
+    ''', (band_id,))
+    
+    venues = cursor.fetchall()
+    conn.close()
+    return venues
