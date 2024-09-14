@@ -158,3 +158,50 @@ def is_hometown_show(concert_id):
     hometown, city = cursor.fetchone()
     conn.close()
     return hometown == city
+
+def concert_introduction(concert_id):
+    conn = sqlite3.connect('concerts.db')
+    cursor = conn.cursor()
+    
+    cursor.execute('''
+    SELECT bands.name, bands.hometown, venues.city 
+    FROM concerts 
+    JOIN bands ON concerts.band_id = bands.id 
+    JOIN venues ON concerts.venue_id = venues.id 
+    WHERE concerts.id = ?;
+    ''', (concert_id,))
+    
+    band_name, band_hometown, venue_city = cursor.fetchone()
+    conn.close()
+    print(f"We the {band_name} from {band_hometown} will be visiting {band.venue} soon")
+
+def play_in_venue(band_id, venue_id, date):
+    conn = sqlite3.connect('concerts.db')
+    cursor = conn.cursor()
+    
+    cursor.execute('''
+    INSERT INTO concerts (band_id, venue_id, date) VALUES (?, ?, ?);
+    ''', (band_id, venue_id, date))
+    
+    conn.commit()
+    conn.close()
+
+def all_introductions(band_id):
+    conn = sqlite3.connect('concerts.db')
+    cursor = conn.cursor()
+    
+    cursor.execute('''
+    SELECT bands.name, bands.hometown, venues.city 
+    FROM concerts 
+    JOIN bands ON concerts.band_id = bands.id 
+    JOIN venues ON concerts.venue_id = venues.id 
+    WHERE bands.id = ?;
+    ''', (band_id,))
+    
+    introductions = [
+        print (f"We the {band_name} from {band_hometown} will be visiting {band.venue} soon")
+        for band_name, band_hometown, venue_city in cursor.fetchall()
+    ]
+    
+    conn.close()
+    return introductions
