@@ -181,7 +181,7 @@ def concert_introduction(concert_id):
     
     band_name, band_hometown, venue_city = cursor.fetchone()
     conn.close()
-    print(f"We the {band_name} from {band_hometown} will be visiting {band.venue} soon")
+    print(f"We, the {band_name} from {band_hometown}, will be visiting {venue_city} soon!")
 
 # method for play in venue
 def play_in_venue(band_id, venue_id, date):
@@ -208,13 +208,10 @@ def all_introductions(band_id):
     WHERE bands.id = ?;
     ''', (band_id,))
     
-    introductions = [
-        print (f"We the {band_name} from {band_hometown} will be visiting {band.venue} soon")
-        for band_name, band_hometown, venue_city in cursor.fetchall()
-    ]
+    for band_name, band_hometown, venue_city in cursor.fetchall():
+        print(f"We, the {band_name} from {band_hometown}, will be visiting {venue_city} soon!")
     
     conn.close()
-    return introductions
 
 # method for band with most performances
 def band_with_most_performances():
@@ -267,3 +264,5 @@ def most_frequent_band(venue_id):
     band = cursor.fetchone()
     conn.close()
     return band
+concert_introduction(1)  
+all_introductions(1)  
