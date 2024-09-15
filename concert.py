@@ -45,14 +45,20 @@ def insert_sample_data():
     # Bands
     cursor.execute("INSERT INTO bands (name, hometown) VALUES ('Westlife', 'Ireland')")
     cursor.execute("INSERT INTO bands (name, hometown) VALUES ('Big Time Rush', 'USA')")
+    cursor.execute("INSERT INTO bands (name, hometown) VALUES ('Maverick City', 'UK')")
+
     
     # Venues
     cursor.execute("INSERT INTO venues (title, city) VALUES ('Aviva Stadium', 'Ireland')")
     cursor.execute("INSERT INTO venues (title, city) VALUES ('Madison Square Garden', 'New York')")
+    cursor.execute("INSERT INTO venues (title, city) VALUES ('Maverick City', 'UK')")
+
     
     # Concerts
     cursor.execute("INSERT INTO concerts (band_id, venue_id, date) VALUES (1, 1, '2024-10-28')")
     cursor.execute("INSERT INTO concerts (band_id, venue_id, date) VALUES (2, 2, '2024-09-29')")
+    cursor.execute("INSERT INTO concerts (band_id, venue_id, date) VALUES (1, 1, '2024-10-28')")
+
     
     conn.commit()
     conn.close()
@@ -199,19 +205,21 @@ def play_in_venue(band_id, venue_id, date):
 def all_introductions(band_id):
     conn = sqlite3.connect('concerts.db')
     cursor = conn.cursor()
-    
+
     cursor.execute('''
-    SELECT bands.name, bands.hometown, venues.city 
-    FROM concerts 
-    JOIN bands ON concerts.band_id = bands.id 
-    JOIN venues ON concerts.venue_id = venues.id 
-    WHERE bands.id = ?;
+    SELECT DISTINCT bands.name, bands.hometown, venues.city
+    FROM concerts
+    JOIN bands ON concerts.band_id = bands.id
+    JOIN venues ON concerts.venue_id = venues.id
+    WHERE bands.id = ?
+    LIMIT 1;  -- Ensure we only fetch one venue for the introduction
     ''', (band_id,))
     
-    for band_name, band_hometown, venue_city in cursor.fetchall():
-        print(f"We, the {band_name} from {band_hometown}, will be visiting {venue_city} soon!")
+    band_name, band_hometown, venue_city = cursor.fetchone()
+    print(f"We, the {band_name} from {band_hometown}, will be visiting {venue_city} soon!")
     
     conn.close()
+
 
 # method for band with most performances
 def band_with_most_performances():
@@ -264,5 +272,6 @@ def most_frequent_band(venue_id):
     band = cursor.fetchone()
     conn.close()
     return band
-concert_introduction(1)  
-all_introductions(1)  
+
+concert_introduction(1)
+all_introductions(2)  
