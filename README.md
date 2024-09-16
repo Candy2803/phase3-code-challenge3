@@ -1,101 +1,86 @@
-Here's a code-friendly version of the README for the Concerts Database project, formatted to be more suited for developers using Visual Studio Code (VS Code):
+# Mock-Code-Challenge---Concerts
 
-```markdown
-# Concerts Database Project
+# Concert Management System
 
-## Overview
-This project is a concert booking system using SQLite, managing the relationships between `bands`, `venues`, and `concerts`. The database supports various operations like retrieving concert details, checking hometown performances, and identifying bands with the most shows.
+This project is a concert management system built using Python and SQLite3. It allows users to manage bands, venues, and concerts by tracking information such as performances and hometown shows. The system enables the creation, retrieval, and querying of concert details while managing the relationships between bands, venues, and concert data.
+Features
 
-This README is focused on setting up the project using **Visual Studio Code (VS Code)**.
+    1. Bands Table: Stores information about bands, including their name and hometown.
+    2. Venues Table: Stores venue details, including the title and city.
+    3. Concerts Table: Tracks concerts by linking bands and venues along with the concert date.
+    4. Concert Operations: Provides methods to retrieve concert information, including band and venue details, hometown shows, and concert introductions.
+    5. Venue Operations: Includes methods to list concerts at specific venues, retrieve bands that have performed at a venue, and find concerts on specific dates.
+    6. Band Operations: Lists all concerts for a specific band, retrieves venues they have performed at, creates new concerts, and generates concert introductions.
+    7. Query Methods: Finds the band with the most performances and the most frequent band at a venue.
 
-## Prerequisites
+## Database Structure
 
-Ensure you have the following installed:
+The system uses three SQLite tables:
 
-- **Python 3.6+**
-- **SQLite** (built-in with Python's `sqlite3` module)
-- **Visual Studio Code** with:
-  - **Python Extension** (`ms-python.python`)
+    bands
+        id: Integer (Primary Key)
+        name: Text (Band name)
+        hometown: Text (Band's hometown)
 
-### Install Python Extension in VS Code
+    venues
+        id: Integer (Primary Key)
+        title: Text (Venue title)
+        city: Text (Venue city)
 
-1. Open **VS Code**.
-2. Open the **Extensions** view (`Ctrl+Shift+X`).
-3. Search for "Python" and install the extension by Microsoft.
+    concerts
+        id: Integer (Primary Key)
+        band_id: Integer (Foreign Key referencing bands)
+        venue_id: Integer (Foreign Key referencing venues)
+        date: Text (Concert date)
 
-## Project Setup
+## Setup Instructions
 
-1. **Clone or Download** this project to your local machine.
+    Clone the repository:
 
-2. Open the project in **Visual Studio Code**:
-    - Click **File > Open Folder**, then select the project directory.
+    
+1. git clone https://github.com/Anthony-Maundu/Mock-Code-Challenge---Concerts.git
 
-3. **Set Up the SQLite Database**:
-    - The project uses `concerts.db`. To initialize it, run the `insert_sample_data()` function.
+2. Navigate to the project directory:
 
-4. **Dependencies**:
-    - Python’s built-in `sqlite3` is used, so no external libraries are required.
+cd Mock-Code-Challenge---Concerts
 
-## How to Run
+3. Install Dependencies: Ensure you have Python and SQLite3 installed on your system.
 
-1. Open the terminal in VS Code:
-    - Go to **Terminal > New Terminal** or press `Ctrl + ` (backtick).
-  
-2. Run the Python script:
+4. Run the Code: Use the following command to run the script:
 
-    ```bash
-    python your_script.py
-    ```
+    python3 concerts.py
 
-    Replace `your_script.py` with the file name containing your project code.
+## Functions and Methods
+1. Concert Functions
 
-## Code Overview
+    get_band_for_concert(concert_id): Returns the band instance for a specific concert.
+    get_venue_for_concert(concert_id): Returns the venue instance for a specific concert.
+    is_hometown_show(concert_id): Returns True if the concert is in the band's hometown, False otherwise.
+    concert_introduction(concert_id): Returns a formatted string introducing the band at the concert.
 
-### Database Structure
+2. Band Functions
 
-- **bands**: Stores information about bands.
-  
-  ```sql
-  CREATE TABLE bands (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      hometown TEXT NOT NULL
-  );
-  ```
+    get_concerts_for_band(band_id): Returns all concerts for a specific band.
+    get_venues_for_band(band_id): Returns all venues where the band has performed.
+    play_in_venue(band_id, venue_id, date): Creates a new concert entry for a band at a venue.
+    all_introductions(band_id): Returns all concert introductions for a band.
+    band_with_most_performances(): Returns the band with the most performances.
 
-- **venues**: Stores details about venues.
-  
-  ```sql
-  CREATE TABLE venues (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      title TEXT NOT NULL,
-      city TEXT NOT NULL
-  );
-  ```
+3. Venue Functions
 
-- **concerts**: Links bands and venues, representing a concert event.
-  
-  ```sql
-  CREATE TABLE concerts (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      band_id INTEGER NOT NULL,
-      venue_id INTEGER NOT NULL,
-      date TEXT NOT NULL,
-      FOREIGN KEY (band_id) REFERENCES bands(id),
-      FOREIGN KEY (venue_id) REFERENCES venues(id)
-  );
-  ```
+    get_concerts_for_venue(venue_id): Returns all concerts for a specific venue.
+    get_bands_for_venue(venue_id): Returns all bands that have performed at a venue.
+    concert_on_date(venue_id, date): Finds the first concert at a venue on a specific date.
+    most_frequent_band(venue_id): Returns the band that has performed the most at a venue.
 
-### Python Methods
+## Sample Data
 
-- **`insert_sample_data()`**: Populates the database with sample data.
-- **`get_band_for_concert(concert_id)`**: Fetches band information for a given concert.
-- **`get_venue_for_concert(concert_id)`**: Fetches venue details for a given concert.
-- **`is_hometown_show(concert_id)`**: Checks if a concert is a hometown show for the band.
-- **`concert_introduction(concert_id)`**: Prints a concert introduction for a specific concert.
-- **`band_with_most_performances()`**: Finds the band with the most performances in the database.
+The insert_sample_data() function populates the database with the following records:
 
-For a complete list of methods and functionality, refer to the code in the Python script.
-```
+    Bands: Example bands such as Sauti-Sol and Wakadinali.
+    Venues: Example venues like Kasarani Stadium and Carnivore Gardens.
+    Concerts: Example concert dates, band performances, and venue locations.
 
-This version is suitable for developers working in VS Code, highlighting setup, usage, and code structure, with code blocks that developers can easily reference.
+## Credits
+
+This project was created and maintained by Anthony Maundu.
