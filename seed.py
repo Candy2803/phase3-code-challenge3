@@ -1,4 +1,4 @@
-from concert_database import ConcertDatabase
+from concert import ConcertDatabase
 
 def insert_sample_data(db):
     # Insert sample bands
