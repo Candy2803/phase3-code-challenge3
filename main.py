@@ -1,4 +1,4 @@
-from concert_database import ConcertDatabase, Band, Venue, Concert
+from concert import ConcertDatabase, Band, Venue, Concert
 
 def main():
     db = ConcertDatabase()
