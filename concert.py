@@ -43,7 +43,9 @@ class ConcertDatabase:
 
 
 class Band:
-    def __init__(self, db: ConcertDatabase):
+    def __init__(self, name, hometown, db: ConcertDatabase):
+        self.name = name
+        self.hometown = hometown
         self.db = db
 
     def get_band_for_concert(self, concert_id):
@@ -83,7 +85,9 @@ class Band:
 
 
 class Venue:
-    def __init__(self, db: ConcertDatabase):
+    def __init__(self, title, city, db: ConcertDatabase):
+        self.title = title
+        self.city = city
         self.db = db
 
     def get_venue_for_concert(self, concert_id):
@@ -124,7 +128,9 @@ class Venue:
 
 
 class Concert:
-    def __init__(self, db: ConcertDatabase):
+    def __init__(self, band_id, venue_id, db: ConcertDatabase):
+        self.band_id = band_id
+        self.venue_id = venue_id
         self.db = db
 
     def is_hometown_show(self, concert_id):
