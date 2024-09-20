@@ -119,4 +119,4 @@ The project is organized around the following classes, each of which represents 
 Made with ❤️ by Candy Wawuda Mzungu.
 
 ---
->>>>>>> 9b659d1 (committed)
+
